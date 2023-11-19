@@ -41,13 +41,14 @@ public class Main {
         File file = new File("D:\\Games\\saveGames");
         File[] files = file.listFiles();
         main.zipFiles("D:\\Games\\saveGames\\zip.zip", files);
+        main.deleteFile(files);
 
 
     }
 
     public void saveGame(String pathName, GameProgress progress) {
         count++;
-        String name = "save" + +count + ".dat";
+        String name = "save" + count + ".dat";
         createNewFile(pathName, name);
         try (FileOutputStream fos = new FileOutputStream(pathName + "\\" + name);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
@@ -71,16 +72,21 @@ public class Main {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                if (file1.delete()) {
-                    System.out.println("файл успешно удален!");
-                } else {
-                    System.out.println("файл не удален");
-                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void deleteFile(File[] files) {
+        for (File file : files) {
+            if (file.delete()) {
+                System.out.println("файл успешно удален!");
+            } else {
+                System.out.println("файл не удален");
+            }
+        }
     }
 
     public void createNewDir(String pathName, String dirName) {
